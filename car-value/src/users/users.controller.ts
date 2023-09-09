@@ -38,7 +38,6 @@ export class UsersController {
 
   @Get(':id')
   findById(@Param('id') id: number) {
-    console.log(id);
     return this.userService.findById(id);
   }
 

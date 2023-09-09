@@ -16,7 +16,6 @@ export class AuthService {
   async signup(email: string, password: string) {
     // check if email is already exist
     const isExists = await this.usersService.findByEmail(email);
-    console.log(isExists);
     if (isExists) throw new BadRequestException('Email in use');
 
     // hash password
