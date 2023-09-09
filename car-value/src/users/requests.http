@@ -1,0 +1,25 @@
+### Create a new user
+POST http://localhost:3000/auth/singup
+Content-Type: application/json
+
+{
+    "email": "ahmed1@gmail.com",
+    "password": "123456"
+}
+
+### Get one user
+GET http://localhost:3000/auth/2
+
+### Get all user with email
+GET http://localhost:3000/auth?email=ahmed@gmail.com
+
+### Delete user
+DELETE  http://localhost:3000/auth/1
+
+### Update user
+PATCH http://localhost:3000/auth/2
+Content-Type: application/json
+
+{
+    "email": "ahmed_@gmail.com"
+}

@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import { Exclude } from 'class-transformer';
+>>>>>>> 5accf3c4cdd00d9c3ab7f694f397a23d99a68f2f
 import {
   Entity,
   Column,
@@ -16,6 +20,10 @@ export class User {
   email: string;
 
   @Column()
+<<<<<<< HEAD
+=======
+  @Exclude()
+>>>>>>> 5accf3c4cdd00d9c3ab7f694f397a23d99a68f2f
   password: string;
 
   @AfterInsert()
