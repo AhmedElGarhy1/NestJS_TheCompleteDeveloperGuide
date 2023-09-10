@@ -6,6 +6,7 @@ import {
   Delete,
   Patch,
   Param,
+  Session,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -13,6 +14,7 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 import { Serialize } from 'src/interceptors/Serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
+import { CurrentUser } from './decorators/current-user.decorator';
 
 @Serialize(UserDto)
 @Controller('auth')
@@ -26,14 +28,36 @@ export class UsersController {
     return this.userService.findAll();
   }
 
+  @Get('whoami')
+  whoami(@CurrentUser() user) {
+    return user;
+  }
+
+  @Post('signout')
+  async signout(@Session() session: any) {
+    session.userId = null;
+  }
+
   @Post('signin')
-  signin(@Body() userData: CreateUserDto) {
-    return this.authService.signin(userData.email, userData.password);
+  async signin(@Body() userData: CreateUserDto, @Session() session: any) {
+    const user = await this.authService.signin(
+      userData.email,
+      userData.password,
+    );
+
+    session.userId = user.id;
+    return user;
   }
 
   @Post('signup')
-  signup(@Body() userData: CreateUserDto) {
-    return this.authService.signup(userData.email, userData.password);
+  async signup(@Body() userData: CreateUserDto, @Session() session: any) {
+    const user = await this.authService.signup(
+      userData.email,
+      userData.password,
+    );
+
+    session.userId = user.id;
+    return user;
   }
 
   @Get(':id')

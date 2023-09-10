@@ -9,7 +9,7 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json
 
 {
-    "email": "ahmed53@gmail.com",
+    "email": "ahmed@gmail.com",
     "password": "123456"
 }
 
@@ -18,12 +18,19 @@ POST http://localhost:3000/auth/signin
 Content-Type: application/json
 
 {
-    "email": "ahmed53@gmail.com",
+    "email": "ahmed@gmail.com",
     "password": "123456"
 }
 
+
+### who am i
+GET  http://localhost:3000/auth/whoami
+
+### signout
+POST http://localhost:3000/auth/signout
+
 ### delete user
-DELETE http://localhost:3000/auth/2
+DELETE http://localhost:3000/auth/7
 
 ### update user
 PATCH  http://localhost:3000/auth/3
