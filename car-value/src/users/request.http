@@ -41,8 +41,3 @@ Content-Type: application/json
 {
     "email": "ahmed_updated1@gmail.com"
 }
-<<<<<<< HEAD
-
-POST http://localhost:3000/auth/signout
-=======
->>>>>>> 9a19908e27d436e674e5e863a6ed7348d8d5347c

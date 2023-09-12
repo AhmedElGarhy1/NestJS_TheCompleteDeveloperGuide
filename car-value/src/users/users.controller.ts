@@ -7,10 +7,7 @@ import {
   Patch,
   Param,
   Session,
-<<<<<<< HEAD
-=======
   UseGuards,
->>>>>>> 9a19908e27d436e674e5e863a6ed7348d8d5347c
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -34,12 +31,6 @@ export class UsersController {
     return this.userService.findAll();
   }
 
-<<<<<<< HEAD
-  @Post('signout')
-  async signout(@Session() session: any) {
-    session.userId = null;
-    return 'signed out';
-=======
   @UseGuards(AuthGaurd)
   @Get('whoami')
   whoami(@CurrentUser() user) {
@@ -49,7 +40,6 @@ export class UsersController {
   @Post('signout')
   async signout(@Session() session: any) {
     session.userId = null;
->>>>>>> 9a19908e27d436e674e5e863a6ed7348d8d5347c
   }
 
   @Post('signin')
@@ -58,10 +48,6 @@ export class UsersController {
       userData.email,
       userData.password,
     );
-<<<<<<< HEAD
-=======
-
->>>>>>> 9a19908e27d436e674e5e863a6ed7348d8d5347c
     session.userId = user.id;
     return user;
   }
@@ -72,10 +58,6 @@ export class UsersController {
       userData.email,
       userData.password,
     );
-<<<<<<< HEAD
-=======
-
->>>>>>> 9a19908e27d436e674e5e863a6ed7348d8d5347c
     session.userId = user.id;
     return user;
   }
