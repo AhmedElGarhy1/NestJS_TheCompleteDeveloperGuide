@@ -9,7 +9,11 @@ async function bootstrap() {
 
   app.use(
     cookieSession({
+<<<<<<< HEAD
       keys: ['klsjdsiixzz'],
+=======
+      keys: ['lksadjfiufsoj'],
+>>>>>>> 9a19908e27d436e674e5e863a6ed7348d8d5347c
     }),
   );
 
