@@ -25,6 +25,8 @@ Content-Type: application/json
 ### delete user
 DELETE http://localhost:3000/auth/2
 
+
+
 ### update user
 PATCH  http://localhost:3000/auth/3
 Content-Type: application/json
@@ -32,3 +34,5 @@ Content-Type: application/json
 {
     "email": "ahmed_updated1@gmail.com"
 }
+
+POST http://localhost:3000/auth/signout
