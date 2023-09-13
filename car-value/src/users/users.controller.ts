@@ -12,23 +12,23 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
-import { Serialize } from 'src/interceptors/Serialize.interceptor';
+import { Serialize } from '../interceptors/Serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { AuthGaurd } from 'src/guards/auth.guard';
+import { AuthGaurd } from '../guards/auth.guard';
 
 @Serialize(UserDto)
 @Controller('auth')
 export class UsersController {
   constructor(
-    private userService: UsersService,
+    private usersService: UsersService,
     private authService: AuthService,
   ) {}
 
   @Get()
   findAll() {
-    return this.userService.findAll();
+    return this.usersService.findAll();
   }
 
   @UseGuards(AuthGaurd)
@@ -64,18 +64,18 @@ export class UsersController {
 
   @Get(':id')
   findById(@Param('id') id: number) {
-    return this.userService.findById(id);
+    return this.usersService.findById(id);
   }
 
   @Delete(':id')
   deleteById(@Param('id') id: number) {
-    const user = this.userService.deleteById(id);
+    const user = this.usersService.deleteById(id);
     return user;
   }
 
   @Patch(':id')
   update(@Param('id') id: number, @Body() userData: UpdateUserDto) {
-    const user = this.userService.update(id, userData);
+    const user = this.usersService.update(id, userData);
     return user;
   }
 }
