@@ -8,6 +8,7 @@ import {
   Param,
   Session,
   UseGuards,
+  NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -63,13 +64,16 @@ export class UsersController {
   }
 
   @Get(':id')
-  findById(@Param('id') id: number) {
-    return this.usersService.findById(id);
+  async findById(@Param('id') id: number) {
+    const user = await this.usersService.findById(id);
+    if (!user) throw new NotFoundException("Coulden't Find this User");
+    return user;
   }
 
   @Delete(':id')
   deleteById(@Param('id') id: number) {
     const user = this.usersService.deleteById(id);
+    if (!user) throw new NotFoundException("Coulden't Find this User");
     return user;
   }
 
