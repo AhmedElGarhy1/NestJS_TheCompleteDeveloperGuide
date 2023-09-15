@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Report } from './report.entity';
 import { CreateReportDto } from './dtos/create-report.dto';
 import { UpdateReportDto } from './dtos/update-report.dto';
+import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class ReportsService {
@@ -11,8 +12,10 @@ export class ReportsService {
     @InjectRepository(Report) private reportsRepo: Repository<Report>,
   ) {}
 
-  async create(reportData: CreateReportDto) {
+  async create(reportData: CreateReportDto, user: User) {
     const report = this.reportsRepo.create(reportData);
+    report.user = user;
+
     return await this.reportsRepo.save(report);
   }
 

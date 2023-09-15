@@ -14,15 +14,18 @@ import { AuthGaurd } from 'src/guards/auth.guard';
 import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 import { User } from 'src/users/user.entity';
 import { UpdateReportDto } from './dtos/update-report.dto';
+import { Serialize } from 'src/interceptors/Serialize.interceptor';
+import { ReportDto } from './dtos/report.dto';
 
 @UseGuards(AuthGaurd)
+@Serialize(ReportDto)
 @Controller('reports')
 export class ReportsController {
   constructor(private reportsService: ReportsService) {}
 
   @Post()
-  async createReport(@Body() body: CreateReportDto) {
-    const report = await this.reportsService.create(body);
+  async createReport(@Body() body: CreateReportDto, @CurrentUser() user: User) {
+    const report = await this.reportsService.create(body, user);
     return report;
   }
 
