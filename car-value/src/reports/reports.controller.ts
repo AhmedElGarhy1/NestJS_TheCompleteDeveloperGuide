@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { CreateReportDto } from './dtos/create-report.dto';
@@ -17,6 +18,7 @@ import { UpdateReportDto } from './dtos/update-report.dto';
 import { Serialize } from 'src/interceptors/Serialize.interceptor';
 import { ReportDto } from './dtos/report.dto';
 import { AdminGuard } from 'src/guards/admin.guard';
+import { GetEstimateDto } from './dtos/get-estimate.dto';
 
 @UseGuards(AuthGuard)
 @Controller('reports')
@@ -29,9 +31,9 @@ export class ReportsController {
     return report;
   }
 
-  @Serialize(ReportDto)
   @Get()
-  async getAllReports(@CurrentUser() user: User) {
+  async getEstimate(@Query() reportData: GetEstimateDto) {
+    return reportData;
     const reports = await this.reportsService.getAll();
     return reports;
   }

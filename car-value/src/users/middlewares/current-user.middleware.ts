@@ -1,6 +1,15 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request } from 'express';
 import { UsersService } from './../users.service';
+import { User } from '../user.entity';
+
+declare global {
+  namespace Express {
+    interface Request {
+      currentUser?: User;
+    }
+  }
+}
 
 @Injectable()
 export class CurrentUserMiddleware implements NestMiddleware {
@@ -11,9 +20,7 @@ export class CurrentUserMiddleware implements NestMiddleware {
       const { userId } = req.session;
       if (userId) {
         const user = await this.usersService.findById(userId);
-        console.log(user);
-        // @ts-ignore
-        req.session.currentUser = user;
+        req.currentUser = user;
       }
       console.log(userId);
     }
