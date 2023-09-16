@@ -5,6 +5,7 @@ import { Report } from './report.entity';
 import { CreateReportDto } from './dtos/create-report.dto';
 import { UpdateReportDto } from './dtos/update-report.dto';
 import { User } from 'src/users/user.entity';
+import { GetEstimateDto } from './dtos/get-estimate.dto';
 
 @Injectable()
 export class ReportsService {
@@ -22,6 +23,27 @@ export class ReportsService {
   async getAll() {
     const reports = this.reportsRepo.find();
     return reports;
+  }
+
+  async createEstimate(estimateDto: GetEstimateDto) {
+    const { make, model, lng, lat, mileage, year } = estimateDto;
+
+    const estimate = await this.reportsRepo
+      .createQueryBuilder()
+      .select('AVG(price)', 'price')
+      .where('approved = true')
+      .andWhere('make = :make')
+      .andWhere('model = :model')
+      .andWhere('lng - :lng BETWEEN -5 AND 5')
+      .andWhere('lat - :lat BETWEEN -5 AND 5')
+      .andWhere('year - :year BETWEEN -3 AND 3')
+      .orderBy('ABS(mileage - :mileage)', 'DESC')
+      .setParameters(estimateDto)
+      .limit(3)
+      .getRawOne();
+
+    console.log(estimate);
+    return estimate || 0;
   }
 
   async findById(id: number) {

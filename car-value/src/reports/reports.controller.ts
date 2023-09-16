@@ -26,6 +26,7 @@ export class ReportsController {
   constructor(private reportsService: ReportsService) {}
 
   @Post()
+  @Serialize(ReportDto)
   async createReport(@Body() body: CreateReportDto, @CurrentUser() user: User) {
     const report = await this.reportsService.create(body, user);
     return report;
@@ -33,8 +34,7 @@ export class ReportsController {
 
   @Get()
   async getEstimate(@Query() reportData: GetEstimateDto) {
-    return reportData;
-    const reports = await this.reportsService.getAll();
+    const reports = await this.reportsService.createEstimate(reportData);
     return reports;
   }
 
