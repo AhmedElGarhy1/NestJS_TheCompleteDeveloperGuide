@@ -37,6 +37,14 @@ export class ReportsService {
     return await this.reportsRepo.save(report);
   }
 
+  async changeApprobal(id: number, approved: boolean) {
+    const report = await this.findById(id);
+    if (!report) throw new NotFoundException('Report not Found');
+
+    report.approved = approved;
+    return await this.reportsRepo.save(report);
+  }
+
   async deleteById(id: number) {
     const report = await this.findById(id);
     if (!report) throw new NotFoundException('Report not Found');

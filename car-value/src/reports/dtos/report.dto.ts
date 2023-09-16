@@ -1,4 +1,4 @@
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 
 export class ReportDto {
   @Expose()
@@ -24,4 +24,11 @@ export class ReportDto {
 
   @Expose()
   mileage: number;
+
+  @Expose()
+  approved: boolean;
+
+  @Transform(({ obj }) => obj.user.id)
+  @Expose()
+  userId: number;
 }

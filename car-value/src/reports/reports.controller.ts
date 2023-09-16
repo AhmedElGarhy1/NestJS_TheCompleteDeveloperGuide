@@ -10,15 +10,15 @@ import {
 } from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { CreateReportDto } from './dtos/create-report.dto';
-import { AuthGaurd } from 'src/guards/auth.guard';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 import { User } from 'src/users/user.entity';
 import { UpdateReportDto } from './dtos/update-report.dto';
 import { Serialize } from 'src/interceptors/Serialize.interceptor';
 import { ReportDto } from './dtos/report.dto';
+import { AdminGuard } from 'src/guards/admin.guard';
 
-@UseGuards(AuthGaurd)
-@Serialize(ReportDto)
+@UseGuards(AuthGuard)
 @Controller('reports')
 export class ReportsController {
   constructor(private reportsService: ReportsService) {}
@@ -29,25 +29,32 @@ export class ReportsController {
     return report;
   }
 
+  @Serialize(ReportDto)
   @Get()
   async getAllReports(@CurrentUser() user: User) {
     const reports = await this.reportsService.getAll();
     return reports;
   }
 
+  @Serialize(ReportDto)
   @Get(':id')
   async getReport(@Param('id') id: number) {
     const reports = await this.reportsService.findById(id);
     return reports;
   }
 
+  @UseGuards(AdminGuard)
   @Patch(':id')
   async updateReport(
     @Param('id') id: number,
     @Body() reportData: UpdateReportDto,
   ) {
-    const reports = await this.reportsService.update(id, reportData);
-    return reports;
+    const report = await this.reportsService.changeApprobal(
+      id,
+      reportData.approved,
+    );
+
+    return report;
   }
 
   @Delete(':id')

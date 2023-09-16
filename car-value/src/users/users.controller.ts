@@ -17,7 +17,7 @@ import { Serialize } from '../interceptors/Serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { AuthGaurd } from '../guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Serialize(UserDto)
 @Controller('auth')
@@ -32,7 +32,7 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @UseGuards(AuthGaurd)
+  @UseGuards(AuthGuard)
   @Get('whoami')
   whoami(@CurrentUser() user) {
     return user;
