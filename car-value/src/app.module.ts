@@ -9,6 +9,7 @@ import { User } from './users/user.entity';
 import { Report } from './reports/report.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
+const settings = require('../ormconfig.js');
 const cookieSession = require('cookie-session');
 
 @Module({
@@ -32,6 +33,8 @@ const cookieSession = require('cookie-session');
     //   entities: [User, Report],
     //   synchronize: true,
     // }),
+
+    // TypeOrmModule.forRoot(settings),
     UsersModule,
     ReportsModule,
   ],
